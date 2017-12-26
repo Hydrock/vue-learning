@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <p>{{ message }}</p>
+
+    <span v-bind:title="message">Подержи курсор</span>
+
+    <span v-if="seen" style="color:red">Меня видно!</span>
+
+    <ul>
+      <li v-for="item in todos">
+        {{ item.text }}
+      </li>
+    </ul>
+
+    <input type="text" v-model="message"/>
+
+    <button v-on:click="reverseMessage">reverse message</button>
+
+
+    <ul>
+        <todo-item
+          v-for="item in groceryList"
+          v-bind:todo="item"
+          v-bind:key="item.id"
+        >
+        </todo-item>
+    </ul>
+
+    {{ obj.foo }}
+  </div>
+
+  <script>
+     // Определяем новый компонент под названием todo-item
+    Vue.component('todo-item', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }}</li>'
+    })
+
+    var obj = {
+      foo: 'bar'
+    }
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!' + new Date().toLocaleString(),
+        seen: false,
+        todos: [
+          { text: 'Посадить дерево' },
+          { text: 'Построить дом' },
+          { text: 'Вырастить сына' }
+        ],
+        groceryList: [
+          { id: 0, text: 'Овощи' },
+          { id: 1, text: 'Сыр' },
+          { id: 2, text: 'Что там ещё люди едят?' }
+        ],
+        obj: obj
+      },
+      methods: {
+        reverseMessage: function () {
+          this.message = this.message.split('').reverse().join('')
+        }
+      }
+    })
+
+   
+  </script>
+</body>
+</html>
